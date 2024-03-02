@@ -13,7 +13,9 @@ class _RegiScreenState extends State<RegiScreen> {
   var passwordController = TextEditingController();
   var cpassController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  bool ISvisibil = false;
+  bool VISpass = false;
+  bool VISconpass = false;
+  String equal = '';
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,8 @@ class _RegiScreenState extends State<RegiScreen> {
                         Icons.email,
                         color: Colors.white,
                       ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide(
@@ -84,7 +88,7 @@ class _RegiScreenState extends State<RegiScreen> {
                       color: Colors.white,),
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
-                    obscureText: !ISvisibil,
+                    obscureText: !VISpass,
                     onFieldSubmitted: (String value) {
                       print(value);
                     },
@@ -96,14 +100,16 @@ class _RegiScreenState extends State<RegiScreen> {
                         color: Colors.white,
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(ISvisibil ? Icons.visibility : Icons.visibility_off),
+                        icon: Icon(VISpass ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
-                            ISvisibil = !ISvisibil;
+                            VISpass = !VISpass;
                           });
                         },
                         color: Colors.white,
                       ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide(
@@ -120,6 +126,7 @@ class _RegiScreenState extends State<RegiScreen> {
                     validator: (value)
                       {
                         if(value!.isEmpty){return 'Password can\'t be empty';}
+                        else { equal = value.trimRight(); }
                         return null;
                       },
                   ),
@@ -132,7 +139,7 @@ class _RegiScreenState extends State<RegiScreen> {
                       color: Colors.white,),
                     controller: cpassController,
                     keyboardType: TextInputType.visiblePassword,
-                    obscureText: !ISvisibil,
+                    obscureText: !VISconpass,
                     onFieldSubmitted: (String value) {
                       print(value);
                     },
@@ -144,14 +151,16 @@ class _RegiScreenState extends State<RegiScreen> {
                         color: Colors.white,
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(ISvisibil ? Icons.visibility : Icons.visibility_off),
+                        icon: Icon(VISconpass ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
-                            ISvisibil = !ISvisibil;
+                            VISconpass = !VISconpass;
                           });
                         },
                         color: Colors.white,
                       ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide(
@@ -168,6 +177,8 @@ class _RegiScreenState extends State<RegiScreen> {
                     validator: (value)
                       {
                         if(value!.isEmpty){return 'Password can\'t be empty';}
+                        else if(value.trimRight() != equal)
+                        {return 'It doesn\'t match the password field';}
                         return null;
                       },
                   ),
