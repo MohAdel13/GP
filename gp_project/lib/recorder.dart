@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:neon_widgets/neon_widgets.dart';
 import 'package:siri_wave/siri_wave.dart';
-import 'dart:async';
+import 'package:record/record.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RecScreen extends StatefulWidget
 {
@@ -12,8 +13,7 @@ class RecScreen extends StatefulWidget
 class _RecScreenState extends State<RecScreen>
 {
   bool isRecord = false;
-  Stopwatch _stopwatch = Stopwatch();
-  Duration _elapsedTime = Duration.zero;
+  final record = AudioRecorder();
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +25,26 @@ class _RecScreenState extends State<RecScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Hi', style: TextStyle(color: Colors.white,
-                  fontSize: 80.0,
-                  fontFamily: 'Italiano'),),
+              Visibility(
+                visible: isRecord,
+                child: Text('Listening...', style: TextStyle(color: Colors.white,
+                    fontSize: 70.0,
+                    fontFamily: 'Italiano'),),
+              ),
+              Visibility(
+                visible: !isRecord,
+                child: Text('Hi', style: TextStyle(color: Colors.white,
+                    fontSize: 70.0,
+                    fontFamily: 'Italiano'),),),
               SizedBox(height: 30.0,),
               
               Visibility(
                 visible: isRecord,
-                child: SiriWaveform.ios7(
-                  controller: IOS7SiriWaveformController(
-                    amplitude: 0.5,
-                    color: Colors.blue,
-                    frequency: 4,
-                    speed: 0.15,),
-                  options: IOS7SiriWaveformOptions(height: 180,width: 360,)),
+                child: SiriWaveform.ios9(
+                  controller: IOS9SiriWaveformController(
+                    amplitude: 1,
+                    speed: 0.1,),
+                  options: IOS9SiriWaveformOptions(height: 180,width: 360,)),
               ),
               SizedBox(height: 30.0,),
               Container(
@@ -46,22 +52,75 @@ class _RecScreenState extends State<RecScreen>
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(60.0)
                 ),
-                child: IconButton(
-                onPressed: (){
-                  setState(() {
-                    isRecord = !isRecord;
-                  });
-                }, 
-                icon: Icon(Icons.mic,
-                color: isRecord ? Colors.green : Colors.grey,
-                size: 85.0,
-                ),
+                child: GestureDetector(
+                  onLongPress: () {
+                    setState(() {
+                      isRecord = !isRecord;
+                      RecordFunc();
+                    });
+                  },
+                  onLongPressEnd: (details) {
+                    setState(() {
+                      isRecord = !isRecord;
+                    });
+                    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of AlertDialog
+      return AlertDialog(
+        title: Text('Alert Dialog Title'),
+        content: Text('This is the content of the dialog'),
+        actions: [
+          // Define two buttons - Save and Cancel
+          TextButton(
+            onPressed: () {
+              // Handle Save action
+              Navigator.of(context).pop();
+              // Implement your save functionality here
+            },
+            child: Text('Save'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Handle Cancel action
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancel'),
+          ),
+        ],
+      );
+    },
+  );
+                  },
+                  child: Icon(
+                  Icons.mic,
+                  color: isRecord ? Colors.blue : Colors.grey,
+                  size: 85.0,
+                  ),
                 ),
               )
             ],
-          )
+          ),
         ),
       ),
       );
+  }
+
+  
+  Future<Stream?> RecordFunc() async
+  {
+    bool hasPermission = await Permission.microphone.status.isGranted;
+    if (!hasPermission) {
+    PermissionStatus status = await Permission.microphone.request();
+    hasPermission = status == PermissionStatus.granted;
+    }
+    if (await record.hasPermission()) {
+    // Start recording to file
+    await record.start(const RecordConfig(), path: 'Records/test.m4a');
+    // ... or to stream
+    final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+    return stream;
+    }
+    return null;
   }
 }
