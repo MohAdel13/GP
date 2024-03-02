@@ -12,7 +12,12 @@ class _RecScreenState extends State<RecScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      body: Container(
+        decoration: const BoxDecoration(color: Colors.black),
+        child: Column(
+          
+        ),
+      ),
     );
   }
 }
