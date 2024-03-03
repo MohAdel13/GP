@@ -64,33 +64,33 @@ class _RecScreenState extends State<RecScreen>
                       isRecord = !isRecord;
                     });
                     showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      // return object of AlertDialog
-      return AlertDialog(
-        title: Text('Alert Dialog Title'),
-        content: Text('This is the content of the dialog'),
-        actions: [
-          // Define two buttons - Save and Cancel
-          TextButton(
-            onPressed: () {
-              // Handle Save action
-              Navigator.of(context).pop();
-              // Implement your save functionality here
-            },
-            child: Text('Save'),
-          ),
-          TextButton(
-            onPressed: () {
-              // Handle Cancel action
-              Navigator.of(context).pop();
-            },
-            child: Text('Cancel'),
-          ),
-        ],
-      );
-    },
-  );
+                      context: context,
+                      builder: (BuildContext context) {
+                        // return object of AlertDialog
+                        return AlertDialog(
+                          title: Text('Alert Dialog Title'),
+                          content: Text('This is the content of the dialog'),
+                          actions: [
+                            // Define two buttons - Save and Cancel
+                            TextButton(
+                              onPressed: () {
+                                // Handle Save action
+                                Navigator.of(context).pop();
+                                // Implement your save functionality here
+                              },
+                              child: Text('Save'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Handle Cancel action
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Cancel'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: Icon(
                   Icons.mic,
