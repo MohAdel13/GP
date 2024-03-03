@@ -27,6 +27,7 @@ dependencies:
   video_player: ^2.8.2
   record: ^5.0.4
   permission_handler: ^11.3.0
+  sqflite: ^2.3.2
 
 dev_dependencies:
   flutter_test:

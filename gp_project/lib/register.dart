@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gp_project/Shared/database.dart';
 import 'package:gp_project/login.dart';
 import 'package:neon_widgets/neon_widgets.dart';
 
@@ -17,6 +18,12 @@ class _RegiScreenState extends State<RegiScreen> {
   bool VISconpass = false;
   String equal = '';
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    createDatabase();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +83,7 @@ class _RegiScreenState extends State<RegiScreen> {
                                 || !value.contains('@') || !value.contains('.')){
                           return 'Input a valid email';
                         }
+                        print(isDuplicated(value).toString());
                         return null;
                       },
                   ),
@@ -197,9 +205,7 @@ class _RegiScreenState extends State<RegiScreen> {
                         onPressed: () {
                           if(formKey.currentState!.validate()){}
                           else{
-                            print(emailController.text);
-                            print(passwordController.text);
-                          }
+                            }
                         },
                         child: const Text(
                           'REGISTER',
