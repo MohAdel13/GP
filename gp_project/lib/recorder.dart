@@ -1,8 +1,11 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:siri_wave/siri_wave.dart';
 import 'package:record/record.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class RecScreen extends StatefulWidget {
   @override
@@ -12,6 +15,16 @@ class RecScreen extends StatefulWidget {
 class _RecScreenState extends State<RecScreen> {
   bool isRecord = false;
   final record = AudioRecorder();
+  final player = AudioPlayer();
+  late String path;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    record.dispose();
+    player.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,26 +110,27 @@ class _RecScreenState extends State<RecScreen> {
                       setState(() {
                         isRecord = !isRecord;
                       });
+                      record.pause();
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           // return object of AlertDialog
                           return AlertDialog(
-                            title: const Text('Alert Dialog Title'),
-                            content: const Text('This is the content of the dialog'),
+                            title: const Text('Audio is recorded'),
+                            content: const Text('Proceed for analysis?'),
                             actions: [
                               // Define two buttons - Save and Cancel
                               TextButton(
                                 onPressed: () {
-                                  // Handle Save action
+                                  record.stop();
+                                  player.play(UrlSource(path));
                                   Navigator.of(context).pop();
-                                  // Implement your save functionality here
                                 },
-                                child: const Text('Save'),
+                                child: const Text('Yes'),
                               ),
                               TextButton(
-                                onPressed: () {
-                                  // Handle Cancel action
+                                onPressed: ()async {
+                                  record.stop();
                                   Navigator.of(context).pop();
                                 },
                                 child: const Text('Cancel'),
@@ -149,11 +163,8 @@ class _RecScreenState extends State<RecScreen> {
     }
     if (await record.hasPermission()) {
       // Start recording to file
-      await record.start(const RecordConfig(), path: 'Records/test.m4a');
-      // ... or to stream
-      final stream = await record
-          .startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
-      return stream;
+      path = '${(await getApplicationDocumentsDirectory()).path}/recording.wav';
+      await record.start(const RecordConfig(), path: path);
     }
     return null;
   }
