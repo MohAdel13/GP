@@ -64,4 +64,4 @@ flutter {
     source '../..'
 }
 
-dependencies {implementation 'com.tekartik:sqflite:2.2.8'}
+dependencies {}

@@ -83,7 +83,6 @@ class _RegiScreenState extends State<RegiScreen> {
                                 || !value.contains('@') || !value.contains('.')){
                           return 'Input a valid email';
                         }
-                        print(isDuplicated(value).toString());
                         return null;
                       },
                   ),
