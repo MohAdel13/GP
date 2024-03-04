@@ -1,10 +1,13 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:siri_wave/siri_wave.dart';
 import 'package:record/record.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'login.dart';
 
 
 class RecScreen extends StatefulWidget {
@@ -29,6 +32,17 @@ class _RecScreenState extends State<RecScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(onPressed: () async{
+            await FirebaseAuth.instance.signOut();
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginScreen()));
+
+          }, icon: const Icon(Icons.exit_to_app),color: Colors.white,)
+        ],
+        backgroundColor: Colors.black,
+      ),
       body: Container(
           color: Colors.black,
           child: Stack(children: [
