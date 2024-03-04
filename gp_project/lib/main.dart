@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gp_project/Shared/database.dart';
+import 'package:gp_project/Shared/constants.dart';
 import 'package:gp_project/get_start_screen.dart';
 import 'package:gp_project/login.dart';
 import 'package:gp_project/recorder.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context){
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RegiScreen(),
+      home: GetStartScreen(),
     );
   }
 }

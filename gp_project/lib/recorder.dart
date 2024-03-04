@@ -124,7 +124,6 @@ class _RecScreenState extends State<RecScreen> {
                                 onPressed: () {
                                   record.stop();
                                   player.play(UrlSource(path));
-                                  Navigator.of(context).pop();
                                 },
                                 child: const Text('Yes'),
                               ),

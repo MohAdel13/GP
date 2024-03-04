@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gp_project/Shared/database.dart';
+import 'package:gp_project/Shared/constants.dart';
 import 'package:gp_project/login.dart';
+import 'package:gp_project/recorder.dart';
 
 class RegiScreen extends StatefulWidget
 {
@@ -19,6 +20,7 @@ class _RegiScreenState extends State<RegiScreen> {
   bool VISpass = false;
   bool VISconpass = false;
   String equal = '';
+  late UserCredential userCredential;
 
   @override
   void initState() {
@@ -205,14 +207,16 @@ class _RegiScreenState extends State<RegiScreen> {
                       child: MaterialButton(
                         onPressed: () async{
                           if(formKey.currentState!.validate()) {
+                            bool err = false;
                             try {
                               FirebaseAuth auth = FirebaseAuth.instance;
-                              final credential = await auth
+                              userCredential = await auth
                                   .createUserWithEmailAndPassword(
                                   email: emailController.text,
                                   password: passwordController.text);
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'weak-password') {
+                                err = true;
                                 Fluttertoast.showToast(
                                     msg: "This password is weak, please choose another strong one",
                                     toastLength: Toast.LENGTH_LONG,
@@ -222,6 +226,7 @@ class _RegiScreenState extends State<RegiScreen> {
                                 );
                               }
                               else if (e.code == 'email-already-in-use') {
+                                err = true;
                                 Fluttertoast.showToast(
                                     msg: "This email is used before",
                                     toastLength: Toast.LENGTH_LONG,
@@ -231,8 +236,18 @@ class _RegiScreenState extends State<RegiScreen> {
                                 );
                               }
                             }
+
+                            if(err == false){
+                              user = userCredential;
+                              await Future.delayed(const Duration(milliseconds: 500), () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) => RecScreen()),
+                                );
+                              });
+                            }
                           }
                           else{
+
                           }
                         },
                         child: const Text(
