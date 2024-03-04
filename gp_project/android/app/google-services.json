@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "723155374403",
+    "project_id": "speech-emotion-recogniti-9cc7c",
+    "storage_bucket": "speech-emotion-recogniti-9cc7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723155374403:android:87e6b335b0e407d40b9ff6",
+        "android_client_info": {
+          "package_name": "com.example.gp_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6N0T07gFuPKnstXama7md2cVpPI1OnBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gp_project/Shared/database.dart';
 import 'package:gp_project/login.dart';
-import 'package:neon_widgets/neon_widgets.dart';
 
 class RegiScreen extends StatefulWidget
 {
@@ -10,9 +11,10 @@ class RegiScreen extends StatefulWidget
 }
 
 class _RegiScreenState extends State<RegiScreen> {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var cpassController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController cpassController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
   bool VISpass = false;
   bool VISconpass = false;
@@ -20,9 +22,7 @@ class _RegiScreenState extends State<RegiScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    createDatabase();
   }
   @override
   Widget build(BuildContext context) {
@@ -36,17 +36,17 @@ class _RegiScreenState extends State<RegiScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Register',
                     style: TextStyle(
-                      fontSize: 80.0,
-                      fontFamily: 'Italiano',
-                      color: Colors.white
+                        fontSize: 80.0,
+                        fontFamily: 'Italiano',
+                        color: Colors.white
                     ),
                   ),
-                  SizedBox(height: 40.0),
+                  const SizedBox(height: 40.0),
                   TextFormField(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20.0,
                       color: Colors.white,),
                     controller: emailController,
@@ -56,41 +56,43 @@ class _RegiScreenState extends State<RegiScreen> {
                     },
                     decoration: InputDecoration(
                       labelText: 'Email Address',
-                      labelStyle: TextStyle(color: Colors.white),
-                      prefixIcon: Icon(
+                      labelStyle: const TextStyle(color: Colors.white),
+                      prefixIcon: const Icon(
                         Icons.email,
                         color: Colors.white,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          width: 2.0,
-                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: const BorderSide(
+                            width: 2.0,
+                            color: Colors.white,
                           )),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          width: 3.0,
-                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: const BorderSide(
+                            width: 3.0,
+                            color: Colors.blue,
                           )),
                     ),
                     validator: (value)
-                      {
-                        if(value!.isEmpty){return 'Email can\'t be empty';}
-                        else if(value.contains('<') || value.contains('>') 
-                                || !value.contains('@') || !value.contains('.')){
-                          return 'Input a valid email';
-                        }
-                        return null;
-                      },
+                    {
+                      if(value!.isEmpty){
+                        return 'Email can\'t be empty';
+                      }
+                      else if(value.contains('<') || value.contains('>')
+                          || !value.contains('@') || !value.contains('.')){
+                        return 'Input a valid email';
+                      }
+                      return null;
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20.0,
                       color: Colors.white,),
                     controller: passwordController,
@@ -102,7 +104,7 @@ class _RegiScreenState extends State<RegiScreen> {
                     decoration: InputDecoration(
                       labelText: 'Password',
                       labelStyle: TextStyle(color: Colors.white,),
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.lock,
                         color: Colors.white,
                       ),
@@ -116,32 +118,32 @@ class _RegiScreenState extends State<RegiScreen> {
                         color: Colors.white,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          width: 2.0,
-                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: const BorderSide(
+                            width: 2.0,
+                            color: Colors.white,
                           )),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          width: 3.0,
-                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: const BorderSide(
+                            width: 3.0,
+                            color: Colors.blue,
                           )),
                     ),
                     validator: (value)
-                      {
-                        if(value!.isEmpty){return 'Password can\'t be empty';}
-                        else { equal = value.trimRight(); }
-                        return null;
-                      },
+                    {
+                      if(value!.isEmpty){return 'Password can\'t be empty';}
+                      else { equal = value.trimRight(); }
+                      return null;
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20.0,
                       color: Colors.white,),
                     controller: cpassController,
@@ -153,7 +155,7 @@ class _RegiScreenState extends State<RegiScreen> {
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',
                       labelStyle: TextStyle(color: Colors.white,),
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.lock,
                         color: Colors.white,
                       ),
@@ -167,29 +169,29 @@ class _RegiScreenState extends State<RegiScreen> {
                         color: Colors.white,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          width: 2.0,
-                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: const BorderSide(
+                            width: 2.0,
+                            color: Colors.white,
                           )),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          width: 3.0,
-                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: const BorderSide(
+                            width: 3.0,
+                            color: Colors.blue,
                           )),
                     ),
                     validator: (value)
-                      {
-                        if(value!.isEmpty){return 'Password can\'t be empty';}
-                        else if(value.trimRight() != equal)
-                        {return 'It doesn\'t match the password field';}
-                        return null;
-                      },
+                    {
+                      if(value!.isEmpty){return 'Password can\'t be empty';}
+                      else if(value.trimRight() != equal)
+                      {return 'It doesn\'t match the password field';}
+                      return null;
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 45.0,
                   ),
                   Padding(
@@ -199,12 +201,39 @@ class _RegiScreenState extends State<RegiScreen> {
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(30.0),
                       ),
-                      width: double.infinity,                 
+                      width: double.infinity,
                       child: MaterialButton(
-                        onPressed: () {
-                          if(formKey.currentState!.validate()){}
-                          else{
+                        onPressed: () async{
+                          if(formKey.currentState!.validate()) {
+                            try {
+                              FirebaseAuth auth = FirebaseAuth.instance;
+                              final credential = await auth
+                                  .createUserWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'weak-password') {
+                                Fluttertoast.showToast(
+                                    msg: "This password is weak, please choose another strong one",
+                                    toastLength: Toast.LENGTH_LONG,
+                                    backgroundColor: Colors.white,
+                                    textColor: Colors.black,
+                                    fontSize: 14.0
+                                );
+                              }
+                              else if (e.code == 'email-already-in-use') {
+                                Fluttertoast.showToast(
+                                    msg: "This email is used before",
+                                    toastLength: Toast.LENGTH_LONG,
+                                    backgroundColor: Colors.white,
+                                    textColor: Colors.black,
+                                    fontSize: 14.0
+                                );
+                              }
                             }
+                          }
+                          else{
+                          }
                         },
                         child: const Text(
                           'REGISTER',
@@ -216,14 +245,14 @@ class _RegiScreenState extends State<RegiScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 12.0,),
-                      Text(
+                      const SizedBox(width: 12.0,),
+                      const Text(
                         'Already have an account?',
                         style: TextStyle(
                             fontSize: 16.0,
@@ -233,11 +262,11 @@ class _RegiScreenState extends State<RegiScreen> {
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder:(context) => LoginScreen(),));
                         },
-                        child: Text(
+                        child: const Text(
                           'Login',
                           style: TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.blue),
+                              fontSize: 18.0,
+                              color: Colors.blue),
                         ),
                       ),
                     ],
