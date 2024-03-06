@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gp_project/Shared/constants.dart';
 import 'package:gp_project/login.dart';
 import 'package:gp_project/recorder.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class RegiScreen extends StatefulWidget
 {
@@ -126,13 +127,15 @@ class _RegiScreenState extends State<RegiScreen> {
                           borderSide: const BorderSide(
                             width: 2.0,
                             color: Colors.white,
-                          )),
+                          )
+                      ),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: const BorderSide(
                             width: 3.0,
                             color: Colors.blue,
-                          )),
+                          )
+                      ),
                     ),
                     validator: (value)
                     {
@@ -197,7 +200,7 @@ class _RegiScreenState extends State<RegiScreen> {
                     height: 45.0,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.blue,
@@ -215,26 +218,17 @@ class _RegiScreenState extends State<RegiScreen> {
                                   email: emailController.text,
                                   password: passwordController.text);
                             } on FirebaseAuthException catch (e) {
-                              if (e.code == 'weak-password') {
-                                err = true;
-                                Fluttertoast.showToast(
-                                    msg: "This password is weak, please choose another strong one",
-                                    toastLength: Toast.LENGTH_LONG,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black,
-                                    fontSize: 14.0
-                                );
-                              }
-                              else if (e.code == 'email-already-in-use') {
-                                err = true;
-                                Fluttertoast.showToast(
-                                    msg: "This email is used before",
-                                    toastLength: Toast.LENGTH_LONG,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black,
-                                    fontSize: 14.0
-                                );
-                              }
+                              err = true;
+                              // ignore: use_build_context_synchronously
+                              AwesomeDialog (
+                                context: context,
+                                dialogType: DialogType.error,
+                                animType: AnimType.rightSlide,
+                                titleTextStyle: const TextStyle(color: Colors.black),
+                                descTextStyle: const TextStyle(color: Colors.red),
+                                title: 'Register Failed..',
+                                desc: "${e.message}",
+                              ).show();
                             }
 
                             if(err == false){

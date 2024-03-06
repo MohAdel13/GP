@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gp_project/Shared/constants.dart';
 import 'package:gp_project/recorder.dart';
 import 'package:gp_project/register.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+
 
 class LoginScreen extends StatefulWidget
 {
@@ -148,21 +150,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               userCredential = await auth.signInWithEmailAndPassword(
                                   email: emailController.text, password: passwordController.text);
                             } on FirebaseAuthException catch (e) {
-                              if (e.code == 'invalid-credential') {
-                                err = true;
-                                Fluttertoast.showToast(
-                                    msg: "Wrong email or password",
-                                    toastLength: Toast.LENGTH_LONG,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black,
-                                    fontSize: 14.0
-                                );
-                              }
+                              err = true;
+                              // ignore: use_build_context_synchronously
+                              AwesomeDialog (
+                                context: context,
+                                dialogType: DialogType.error,
+                                animType: AnimType.rightSlide,
+                                titleTextStyle: const TextStyle(color: Colors.black),
+                                descTextStyle: const TextStyle(color: Colors.red),
+                                title: 'Login Failed..',
+                                desc: "${e.message}",
+                              ).show();
                             }
 
                             if(err == false){
                               user = userCredential;
-                              print(userCredential);
                               await Future.delayed(const Duration(milliseconds: 500), () {
                                 Navigator.push(
                                   context,
