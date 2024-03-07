@@ -37,6 +37,7 @@ dependencies:
   siri_wave: ^2.0.0+1
   slider_button: ^2.1.0
   awesome_dialog: ^3.2.0
+  loading_animation_widget: ^1.2.0+4
 
 dev_dependencies:
   flutter_test:
