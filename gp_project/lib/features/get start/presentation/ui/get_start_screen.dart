@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gp_project/login.dart';
 import 'package:slider_button/slider_button.dart';
 
-class GetStartScreen extends StatefulWidget
-{
-  @override
-  _GetStartScreen createState() => _GetStartScreen();
-}
+import '../../../login/presentation/ui/login_screen.dart';
 
-// Create the MyHomePage widget for the main screen
-class _GetStartScreen extends State<GetStartScreen> {
-  
+class GetStartScreen extends StatelessWidget
+{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +31,11 @@ class _GetStartScreen extends State<GetStartScreen> {
             alignment: Alignment.bottomCenter,
             padding: const EdgeInsets.symmetric(vertical: 100.0),
             child: SliderButton(
-              action:()async{
-                Navigator.push(context, MaterialPageRoute(builder:(context) => LoginScreen(),));
+              action:(){
+                Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder:(context) => LoginScreen(),),
+                );
+                return Future(() => true);
               },
               baseColor: Colors.blue,
               label: const Text(
