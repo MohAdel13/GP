@@ -34,16 +34,21 @@ class HomeLayoutScreen extends StatelessWidget{
       ),
       body: BlocProvider(
         create: (BuildContext context) => HomeCubit(),
-        child: BlocConsumer<HomeCubit, HomeStates>(builder: (
-          BuildContext context, HomeStates state) {
+        child: BlocConsumer<HomeCubit, HomeStates>(
+          builder: (BuildContext context, HomeStates state) {
             HomeCubit cubit = HomeCubit.get(context);
             return Column(
               children: [
-                Expanded(child: cubit.currentScreen),
+                Expanded(
+                  child: Container(
+                    color: Colors.black,
+                    child: cubit.currentScreen,
+                  )
+                ),
                 Container(
                   color: Colors.black,
                   padding: const EdgeInsets.all(10.0),
-                  height: 120.0,
+                  height: 180.0,
                   child: CircularMenu(
                     toggleButtonColor: Colors.grey.withOpacity(0.2),
                     toggleButtonSize: 30,

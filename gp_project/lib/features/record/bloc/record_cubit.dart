@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_project/features/home%20layout/presentation/ui/home_layout_screen.dart';
 import 'package:gp_project/features/record/bloc/record_states.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -46,19 +43,19 @@ class RecordCubit extends Cubit<RecordStates> {
             // Define two buttons - Save and Cancel
             TextButton(
               onPressed: () async {
-                final bytes = await File(path).readAsBytes();
-                String audio64 = base64Encode(bytes);
+                final File audio = File(path);
+                Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ResultScreen(audio64: audio64))
+                  MaterialPageRoute(builder: (context) => ResultScreen(audio: audio))
                 );
-                //Navigator.pop(context);
+                close();
               },
               child: const Text('Yes'),
             ),
             TextButton(
               onPressed: (){
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               child: const Text('Cancel'),
             ),

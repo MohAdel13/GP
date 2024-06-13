@@ -60,7 +60,7 @@ class RecordScreen extends StatelessWidget {
                           color: const Color(0xFF35374B),
                           borderRadius: BorderRadius.circular(60.0)
                       ),
-                      child: GestureDetector(
+                      child: InkWell(
                         onTap: () {
                           cubit.startRecord();
                           Future.delayed(

@@ -9,5 +9,6 @@ class CustomCircularMenuItem extends CircularMenuItem {
     iconSize: 25.0,
     boxShadow: const [],
     color: const Color(0xFF35374B),
-    badgeRadius: 15.0,  );
+    badgeRadius: 15.0,
+  );
 }

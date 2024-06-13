@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,12 +33,11 @@ class UploadCubit extends Cubit<UploadStates>{
   }
 
   void proceed(BuildContext context) async {
-    final bytes = await File(file!.path).readAsBytes();
-    String audio64 = base64Encode(bytes);
+    final audio = File(file!.path);
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ResultScreen(audio64: audio64))
+            builder: (context) => ResultScreen(audio: audio))
     );
   }
 }

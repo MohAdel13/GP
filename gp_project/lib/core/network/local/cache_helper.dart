@@ -7,7 +7,7 @@ class CacheHelper{
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Object? getData(String key) async{
+  static Object? getData(String key){
     Object? value = sharedPreferences.get(key);
     return value;
   }
