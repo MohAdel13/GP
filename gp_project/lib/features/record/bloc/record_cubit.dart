@@ -25,7 +25,7 @@ class RecordCubit extends Cubit<RecordStates> {
     if (await record.hasPermission()) {
       path = '${(await getApplicationDocumentsDirectory())
           .path}/recording.wav';
-      await record.start(const RecordConfig(), path: path);
+      await record.start(const RecordConfig(encoder: AudioEncoder.wav), path: path);
       emit(RecordStartState());
     }
   }
@@ -45,11 +45,10 @@ class RecordCubit extends Cubit<RecordStates> {
               onPressed: () async {
                 final File audio = File(path);
                 Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ResultScreen(audio: audio))
+                await Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ResultScreen(audio: audio))
                 );
-                close();
+                emit(RecordInitState());
               },
               child: const Text('Yes'),
             ),

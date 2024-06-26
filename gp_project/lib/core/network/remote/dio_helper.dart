@@ -7,7 +7,7 @@ class DioHelper{
 
     dio = Dio(
       BaseOptions(
-        baseUrl: "http://192.168.188.93:5000",
+        baseUrl: "http://192.168.80.93:5000",
         headers: {
           "Content-Type": "application/json",
         },

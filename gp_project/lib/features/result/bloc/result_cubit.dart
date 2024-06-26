@@ -18,9 +18,9 @@ class ResultCubit extends Cubit<ResultStates>{
 
   final File audio;
 
-  List<String> emotions = [
-    'Angry', 'Happy', 'Sad', 'Disgust', 'Fearful', 'Surprised', 'Neutral', 'Calm'
-  ];
+  // List<String> emotions = [
+  //   'Angry', 'Happy', 'Sad', 'Disgust', 'Fearful', 'Surprised', 'Neutral', 'Calm'
+  // ];
 
   static ResultCubit get(BuildContext context) => BlocProvider.of(context);
 
@@ -36,13 +36,13 @@ class ResultCubit extends Cubit<ResultStates>{
     });
 
     if(response.statusCode == 200 || response.statusCode == 201){
-      resultEmotion = emotions[response.data['emotion']];
+      resultEmotion = response.data['emotion'];
       print(resultEmotion);
       emit(ResultSuccessState());
     }
 
     else{
-      //print("error:..............." + response.data['error']);
+      print("error:..............." + response.data['error']);
       emit(ResultErrorState());
     }
   }
